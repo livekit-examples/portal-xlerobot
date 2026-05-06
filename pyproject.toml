@@ -1,0 +1,44 @@
+[project]
+name = "xlerobot-portal"
+version = "0.1.0"
+description = "Bimanual SO-101 leader teleop of XLeRobot over LiveKit Portal, with RPC-toggled LeRobotDataset recording and rerun visualization."
+requires-python = ">=3.12"
+dependencies = [
+    "lerobot[feetech,dataset]>=0.5",
+    "livekit-portal>=0.1.3",
+    "lerobot-robot-livekit>=0.1.3",
+    "lerobot-teleoperator-livekit>=0.1.3",
+    "livekit-api>=0.7",
+    "python-dotenv>=1",
+    "rerun-sdk>=0.26",
+    "numpy>=1.24",
+    "opencv-python>=4.5",
+    "pynput>=1.7",
+]
+
+[project.scripts]
+xlerobot-portal-robot             = "xlerobot_portal.robot:main"
+xlerobot-portal-operator          = "xlerobot_portal.operator:main"
+xlerobot-portal-calibrate-robot   = "xlerobot_portal.calibrate:robot"
+xlerobot-portal-calibrate-leaders = "xlerobot_portal.calibrate:leaders"
+xlerobot-portal-diagnose          = "xlerobot_portal.diagnose:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/xlerobot_portal"]
+
+# livekit-portal, lerobot-robot-livekit, and lerobot-teleoperator-livekit are
+# published on PyPI and install from there by default.
+# lerobot points to the local clone created by scripts/bootstrap.sh.
+# Run bootstrap.sh once; it clones huggingface/lerobot into external/lerobot/
+# and overlays the XLeRobot robot driver on top.
+[tool.uv.sources]
+lerobot = { path = "external/lerobot", editable = true }

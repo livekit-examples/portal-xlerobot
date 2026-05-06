@@ -1,0 +1,14 @@
+.env
+.env.local
+calibration.json
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+dist/
+*.egg-info/
+
+# external/lerobot is cloned (or symlinked) by scripts/bootstrap.sh — don't track it.
+# external/lerobot_overlay IS tracked (it's the XLeRobot robot driver bundle).
+external/lerobot
